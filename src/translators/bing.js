@@ -222,11 +222,6 @@ class BingTranslator {
          * Translator language code to language.
          */
         this.CODE_TO_LAN = new Map(LANGUAGES.map(([lan, code]) => [code, lan]));
-
-        /**
-         * Audio instance.
-         */
-        // this.AUDIO = new Audio();
     }
 
     /**
@@ -519,72 +514,6 @@ class BingTranslator {
             return transResult;
         }
     }
-
-    /**
-     * Pronounce given text.
-     *
-     * @param {String} text text to pronounce
-     * @param {String} language language of text
-     * @param {String} speed "fast" or "slow"
-     *
-     * @returns {Promise<void>} pronounce finished
-     */
-    // async pronounce(text, language, speed) {
-    //     // Pause audio in case that it's playing.
-    //     this.stopPronounce();
-
-    //     let retryCount = 0;
-    //     let pronounceOnce = async () => {
-    //         let url =
-    //             "https://" +
-    //             this.TTS_AUTH.region +
-    //             ".tts.speech.microsoft.com/cognitiveservices/v1?";
-
-    //         let headers = {
-    //             "Content-Type": "application/ssml+xml",
-    //             Authorization: "Bearer " + this.TTS_AUTH.token,
-    //             "X-MICROSOFT-OutputFormat": "audio-16khz-32kbitrate-mono-mp3",
-    //             "cache-control": "no-cache"
-    //         };
-
-    //         try {
-    //             const TTSResponse = await this.request(
-    //                 {
-    //                     method: "POST",
-    //                     baseURL: url,
-    //                     headers: headers,
-    //                     data: this.generateTTSData(text, language, speed),
-    //                     responseType: "arraybuffer"
-    //                 },
-    //                 false
-    //             );
-    //             this.AUDIO.src = "data:audio/mp3;base64," + this.arrayBufferToBase64(TTSResponse);
-    //             return this.AUDIO.play();
-    //         } catch (error) {
-    //             if (retryCount < this.MAX_RETRY) {
-    //                 retryCount++;
-    //                 return this.updateTTSAuth().then(pronounceOnce);
-    //             } else {
-    //                 throw error;
-    //             }
-    //         }
-    //     };
-
-    //     if (!(this.TTS_AUTH.region.length > 0 && this.TTS_AUTH.token.length > 0)) {
-    //         await this.updateTTSAuth();
-    //     }
-
-    //     return pronounceOnce();
-    // }
-
-    /**
-     * Pause pronounce.
-     */
-    // stopPronounce() {
-    //     if (!this.AUDIO.paused) {
-    //         this.AUDIO.pause();
-    //     }
-    // }
 }
 
 export default BingTranslator;

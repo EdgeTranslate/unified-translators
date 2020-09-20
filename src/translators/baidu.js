@@ -232,11 +232,6 @@ class BaiduTranslator {
          * Translator language code to language.
          */
         this.CODE_TO_LAN = new Map(LANGUAGES.map(([lan, code]) => [code, lan]));
-
-        /**
-         * TTS audio instance.
-         */
-        // this.AUDIO = new Audio();
     }
 
     /**
@@ -451,44 +446,6 @@ class BaiduTranslator {
             });
         }
     }
-
-    /**
-     * Pronounce given text.
-     *
-     * @param {String} text text to pronounce
-     * @param {String} language language of text
-     * @param {String} speed "fast" or "slow"
-     *
-     * @returns {Promise<void>} pronounce finished
-     */
-    // pronounce(text, language, speed) {
-    //     // Pause audio in case that it's playing.
-    //     this.stopPronounce();
-
-    //     // Set actual speed value.
-    //     let speedValue = speed === "fast" ? "7" : "3";
-
-    //     this.AUDIO.src =
-    //         this.HOST +
-    //         "gettts?lan=" +
-    //         this.LAN_TO_CODE.get(language) +
-    //         "&text=" +
-    //         encodeURIComponent(text) +
-    //         "&spd=" +
-    //         speedValue +
-    //         "&source=web";
-
-    //     return this.AUDIO.play();
-    // }
-
-    /**
-     * Pause pronounce.
-     */
-    // stopPronounce() {
-    //     if (!this.AUDIO.paused) {
-    //         this.AUDIO.pause();
-    //     }
-    // }
 
     /* eslint-disable */
     tokenA(r, o) {

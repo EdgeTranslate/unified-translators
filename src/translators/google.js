@@ -143,9 +143,9 @@ class GoogleTranslator {
         this.CODE_TO_LAN = new Map(LANGUAGES.map(([lan, code]) => [code, lan]));
 
         /**
-         * Audio instance.
+         * Characters need escaping.
          */
-        // this.AUDIO = new Audio();
+        this.REGEX_HTML_ESCAPE = /"|&|'|<|>/g;
     }
 
     /* eslint-disable */
@@ -210,6 +210,20 @@ class GoogleTranslator {
     /* eslint-enable */
 
     /**
+     * Escape HTML characters in a string.
+     *
+     * @param {String} str string to escape.
+     */
+    escapeHTML(str) {
+        if (typeof str !== "string") return str;
+
+        return str.replace(this.REGEX_HTML_ESCAPE, expression => {
+            let char = expression.charCodeAt(0);
+            return `&#${char == 0x20 ? 0xa0 : char};`;
+        });
+    }
+
+    /**
      * Update TKK from Google translate page.
      *
      * @returns {Promise<void>} promise
@@ -265,19 +279,19 @@ class GoogleTranslator {
                             originalTexts.push(items[j][1]);
                         }
                         // 根据源文本将翻译结果格式化
-                        result.mainMeaning = escapeHTML(mainMeanings.join("")).replace(
+                        result.mainMeaning = this.escapeHTML(mainMeanings.join("")).replace(
                             /\n|\r/g,
                             "<br/>"
                         );
-                        result.originalText = escapeHTML(originalTexts.join(""));
+                        result.originalText = this.escapeHTML(originalTexts.join(""));
                         try {
                             if (lastIndex > 0) {
                                 if (items[lastIndex][2] && items[lastIndex][2].length > 0) {
-                                    result.tPronunciation = escapeHTML(items[lastIndex][2]);
+                                    result.tPronunciation = this.escapeHTML(items[lastIndex][2]);
                                 }
 
                                 if (items[lastIndex][3] && items[lastIndex][3].length > 0) {
-                                    result.sPronunciation = escapeHTML(items[lastIndex][3]);
+                                    result.sPronunciation = this.escapeHTML(items[lastIndex][3]);
                                 }
                             }
                         } catch (error) {
@@ -419,58 +433,6 @@ class GoogleTranslator {
 
         return translateOnce();
     }
-
-    /**
-     * Pronounce text.
-     *
-     * @param {String} text text to pronounce
-     * @param {String} language language of text
-     * @param {String} speed pronounce speed, "fast" or "slow"
-     *
-     * @returns {Promise<void>} Promise of playing
-     */
-    // pronounce(text, language, speed) {
-    //     this.stopPronounce();
-    //     let speedValue = speed === "fast" ? "0.2" : "0.8";
-    //     this.AUDIO.src =
-    //         this.TTS_URL +
-    //         "&q=" +
-    //         encodeURIComponent(text) +
-    //         "&tl=" +
-    //         this.LAN_TO_CODE.get(language) +
-    //         "&ttsspeed=" +
-    //         speedValue +
-    //         "&tk=" +
-    //         this.generateTK(text, this.TKK[0], this.TKK[1]);
-    //     return this.AUDIO.play();
-    // }
-
-    /**
-     * Stop pronouncing.
-     */
-    // stopPronounce() {
-    //     if (!this.AUDIO.paused) {
-    //         this.AUDIO.pause();
-    //     }
-    // }
-}
-
-/**
- * escape HTML tag to avoid XSS security problems
- * @param {string} str string text to be escaped
- */
-function escapeHTML(str) {
-    const REGEX_HTML_ESCAPE = /"|&|'|<|>/g;
-
-    if (typeof str !== "string") return str;
-    return str.replace(REGEX_HTML_ESCAPE, expression => {
-        var char = expression.charCodeAt(0);
-        var result = ["&#"];
-        char = char == 0x20 ? 0xa0 : char;
-        result.push(char);
-        result.push(";");
-        return result.join("");
-    });
 }
 
 export default GoogleTranslator;
