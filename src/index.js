@@ -1,14 +1,30 @@
 import BaiduTranslator from "./translators/baidu.js";
 import BingTranslator from "./translators/bing.js";
 import GoogleTranslator from "./translators/google.js";
+import HybridTranslator from "./translators/hybrid.js";
+
+/**
+ * Default hybrid translator.
+ */
+const HYBRID_TRANSLATOR = new HybridTranslator({
+    translators: ["baidu", "bing", "google"],
+    selections: {
+        originalText: "google",
+        mainMeaning: "bing",
+        tPronunciation: "bing",
+        sPronunciation: "baidu",
+        detailedMeanings: "bing",
+        definitions: "google",
+        examples: "baidu"
+    }
+});
 
 /**
  * Supported translators.
  */
 const TRANSLATORS = Object.freeze({
-    baidu: new BaiduTranslator(),
-    bing: new BingTranslator(),
-    google: new GoogleTranslator()
+    hybrid: HYBRID_TRANSLATOR,
+    ...HYBRID_TRANSLATOR.REAL_TRANSLATORS
 });
 
 /**
@@ -231,4 +247,11 @@ const LANGUAGES = {
 /**
  * Export languages.
  */
-export { LANGUAGES, TRANSLATORS, BaiduTranslator, BingTranslator, GoogleTranslator };
+export {
+    LANGUAGES,
+    TRANSLATORS,
+    HybridTranslator,
+    BaiduTranslator,
+    BingTranslator,
+    GoogleTranslator
+};
