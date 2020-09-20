@@ -20,14 +20,4 @@ describe("Make sure that all of the supported languages in translators can be fo
         }
         done();
     });
-
-    it("to test supported languages in baidu.js", done => {
-        let languages = TRANSLATORS.baidu.supportedLanguages();
-        for (let lan of languages) {
-            if (lan !== "auto") {
-                expect(LANGUAGES[lan]).toBeDefined();
-            }
-        }
-        done();
-    });
 });

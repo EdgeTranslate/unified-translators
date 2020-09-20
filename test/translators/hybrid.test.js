@@ -3,15 +3,15 @@ import HybridTranslator from "translators/hybrid.js";
 
 describe("hybrid translator api", () => {
     const TRANSLATOR = new HybridTranslator({
-        translators: ["baidu", "bing", "google"],
+        translators: ["bing", "google"],
         selections: {
             originalText: "bing",
             mainMeaning: "bing",
             tPronunciation: "bing",
             sPronunciation: "google",
             detailedMeanings: "google",
-            definitions: "baidu",
-            examples: "baidu"
+            definitions: "google",
+            examples: "google"
         }
     });
 

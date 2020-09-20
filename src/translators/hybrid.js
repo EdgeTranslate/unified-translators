@@ -1,4 +1,3 @@
-import BaiduTranslator from "./baidu.js";
 import BingTranslator from "./bing.js";
 import GoogleTranslator from "./google.js";
 
@@ -16,7 +15,6 @@ class HybridTranslator {
          * Real supported translators.
          */
         this.REAL_TRANSLATORS = {
-            baidu: new BaiduTranslator(),
             bing: new BingTranslator(),
             google: new GoogleTranslator()
         };
